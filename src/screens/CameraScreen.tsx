@@ -16,10 +16,24 @@ const CameraScreen = () => {
   const [imageData, setImageData] = useState('');
 
   const handlePickImage = (useCamera: boolean) => {
+    console.log('handlePickImage called with useCamera:', useCamera);
     pickImage(useCamera, (item) => {
+      console.log('pickImage callback called with item:', item);
       if (item.photoUris && item.photoUris.length > 0) {
-        processImage(item.photoUris[0] as string, setImageData, setMeasurements);
+        const uri = item.photoUris[0] as string;
+        console.log('Picked Image URI:', uri);
+        processImage(uri, setImageData, setMeasurements);
       }
+    }, 'CameraScreen');
+  };
+
+  const handleClear = () => {
+    setImageData('');
+    setMeasurements({
+      threadSpacing: 0,
+      length: 0,
+      socketSize: 0,
+      headType: '',
     });
   };
 
@@ -41,6 +55,9 @@ const CameraScreen = () => {
       <Text>Length: {measurements.length.toFixed(2)} units</Text>
       <Text>Socket Size: {measurements.socketSize.toFixed(2)} units</Text>
       <Text>Head Type: {measurements.headType}</Text>
+      {imageData ? (
+        <Button title="Clear" onPress={handleClear} />
+      ) : null}
     </View>
   );
 };

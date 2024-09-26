@@ -26,32 +26,49 @@ export const requestCameraPermission = async () => {
 };
 
 // Pick an image from the gallery or take a new photo
-export const pickImage = async (useCamera: boolean, setNewItem: (item: Partial<CustomItem>) => void) => {
+export const pickImage = async (
+  useCamera: boolean, 
+  setNewItem: (item: Partial<CustomItem>) => void, 
+  callbackType: 'RegisteredItems' | 'CameraScreen'
+) => {
+  console.log('pickImage called with useCamera:', useCamera);
   let result;
-  if (useCamera) {
-    result = await launchCamera({
-      mediaType: 'photo',
-      includeBase64: false,
-      maxHeight: 200,
-      maxWidth: 200,
-    });
-  } else {
-    result = await launchImageLibrary({
-      mediaType: 'photo',
-      includeBase64: false,
-      maxHeight: 200,
-      maxWidth: 200,
-    });
-  }
-
-  if (result.assets && result.assets.length > 0) {
-    const newPhotoUri = result.assets[0].uri;
-    if (newPhotoUri) {
-      setNewItem((prevItem) => ({
-        ...prevItem,
-        photoUris: prevItem.photoUris ? [...prevItem.photoUris, newPhotoUri].filter(Boolean).slice(0, 3) : [newPhotoUri],
-      }));
+  try {
+    if (useCamera) {
+      result = await launchCamera({
+        mediaType: 'photo',
+        includeBase64: false,
+        maxHeight: 200,
+        maxWidth: 200,
+      });
+    } else {
+      result = await launchImageLibrary({
+        mediaType: 'photo',
+        includeBase64: false,
+        maxHeight: 200,
+        maxWidth: 200,
+      });
     }
+    console.log('Image picker result:', result);
+
+    if (result.assets && result.assets.length > 0) {
+      const newPhotoUri = result.assets[0].uri;
+      console.log('New photo URI:', newPhotoUri);
+      if (newPhotoUri) {
+        if (callbackType === 'RegisteredItems') {
+          setNewItem((prevItem) => ({
+            ...prevItem,
+            photoUris: prevItem.photoUris ? [...prevItem.photoUris, newPhotoUri].filter(Boolean).slice(0, 3) : [newPhotoUri],
+          }));
+        } else if (callbackType === 'CameraScreen') {
+          setNewItem({
+            photoUris: [newPhotoUri],
+          });
+        }
+      }
+    }
+  } catch (error) {
+    console.error('Error picking image:', error);
   }
 };
 

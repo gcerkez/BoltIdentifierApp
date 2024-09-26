@@ -95,7 +95,7 @@ const RegisteredItems = () => {
   };
 
   const handlePickImage = (useCamera: boolean) => {
-    pickImage(useCamera, setNewItem);
+    pickImage(useCamera, setNewItem, 'RegisteredItems');
   };
 
   const handleCancel = () => {

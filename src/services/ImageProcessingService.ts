@@ -1,26 +1,30 @@
 import RNFS from 'react-native-fs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import ImageResizer from 'react-native-image-resizer';
 
 export const processImage = async (uri: string, setImageData: Function, setMeasurements: Function) => {
+  console.log('processImage called with uri:', uri);
   const imageData = await RNFS.readFile(uri, 'base64');
   setImageData(imageData);
-  const img: HTMLImageElement = document.createElement('img');
-  img.src = `data:image/jpeg;base64,${imageData}`;
-  img.onload = () => {
-    const pixelPerUnit = calculatePixelPerUnit(img);
-    const dimensions = measureDimensions(img, pixelPerUnit);
+
+  try {
+    const resizedImage = await ImageResizer.createResizedImage(uri, 200, 200, 'JPEG', 100);
+    const pixelPerUnit = calculatePixelPerUnit(resizedImage);
+    const dimensions = measureDimensions(resizedImage, pixelPerUnit);
     setMeasurements(dimensions);
-    saveScanHistory(uri, dimensions);
-  };
+    saveScanHistory(uri, dimensions); // Save the scan history
+  } catch (error) {
+    console.error('Error resizing image:', error);
+  }
 };
 
-const calculatePixelPerUnit = (img: HTMLImageElement): number => {
+const calculatePixelPerUnit = (img: { width: number; height: number }): number => {
   const referenceLengthInPixels = 100; // Placeholder value
   const referenceLengthInUnits = 10; // Placeholder value (e.g., 10 mm)
   return referenceLengthInPixels / referenceLengthInUnits;
 };
 
-const measureDimensions = (img: HTMLImageElement, pixelPerUnit: number) => {
+const measureDimensions = (img: { width: number; height: number }, pixelPerUnit: number) => {
   const threadSpacingInPixels = 20; // Placeholder value
   const lengthInPixels = 200; // Placeholder value
   const socketSizeInPixels = 50; // Placeholder value
@@ -40,6 +44,7 @@ const saveScanHistory = async (uri: string, measurements: any) => {
     date: new Date().toLocaleString(),
     measurements,
   };
+  console.log('Saving History Item:', newHistoryItem);
 
   const storedHistory = await AsyncStorage.getItem('scanHistory');
   const history = storedHistory ? JSON.parse(storedHistory) : [];
