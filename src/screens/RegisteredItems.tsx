@@ -4,17 +4,19 @@ import { Picker } from '@react-native-picker/picker';
 import CheckBox from '@react-native-community/checkbox';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faEdit, faTrash, faPlus, faCamera } from '@fortawesome/free-solid-svg-icons';
-import styles from './RegisteredItemsStyles';
+import styles from '../styles/RegisteredItemsStyles';
 import {
   loadCustomItems,
   addOrUpdateCustomItem,
   deleteCustomItem,
-  confirmDeleteCustomItem,
+  confirmDeleteCustomItem
+} from '../services/RegisteredItemsService';
+import {
   requestCameraPermission,
   pickImage,
   confirmDeletePhoto,
   deletePhoto
-} from '../services/RegisteredItemsService';
+} from '../utils/ImagePickerUtil';
 
 // Predefined items with static data
 const predefinedItems: CustomItem[] = [
@@ -109,6 +111,11 @@ const RegisteredItems = () => {
     setIsFormVisible(false);
   };
 
+  const handleNumericInput = (text: string, setter: (value: string) => void) => {
+    const filteredText = text.replace(/[^0-9.]/g, '');
+    setter(filteredText);
+  };
+
   return (
     <View style={[styles.container, styles.roundedCorners]}>
       <FlatList
@@ -179,22 +186,25 @@ const RegisteredItems = () => {
             <TextInput
               placeholder="Item Diameter"
               value={size}
-              onChangeText={(text) => setSize(text)}
+              onChangeText={(text) => handleNumericInput(text, setSize)}
               style={[styles.input, !size && styles.required, styles.roundedCorners]}
+              keyboardType="numeric"
             />
           ) : (
             <>
               <TextInput
                 placeholder="Item Width"
                 value={newItem.width}
-                onChangeText={(text) => setNewItem({ ...newItem, width: text })}
+                onChangeText={(text) => handleNumericInput(text, (value) => setNewItem({ ...newItem, width: value }))}
                 style={[styles.input, !newItem.width && styles.required, styles.roundedCorners]}
+                keyboardType="numeric"
               />
               <TextInput
                 placeholder="Item Height"
                 value={newItem.height}
-                onChangeText={(text) => setNewItem({ ...newItem, height: text })}
+                onChangeText={(text) => handleNumericInput(text, (value) => setNewItem({ ...newItem, height: value }))}
                 style={[styles.input, !newItem.height && styles.required, styles.roundedCorners]}
+                keyboardType="numeric"
               />
             </>
           )}
@@ -217,11 +227,14 @@ const RegisteredItems = () => {
               ))}
             </View>
             <View style={styles.imageButtonGap} />
-            <Button
-              title="Pick an image or take a photo"
+            <TouchableOpacity
               onPress={() => requestCameraPermission().then(() => handlePickImage(true))}
+              style={[styles.cameraButton, newItem.photoUris && newItem.photoUris.length >= 3 && styles.cameraButtonDisabled]}
               disabled={newItem.photoUris && newItem.photoUris.length >= 3}
-            />
+            >
+              <FontAwesomeIcon icon={faCamera} size={24} color="#ffffff" />
+              <Text style={styles.cameraButtonText}>Pick an image or take a photo</Text>
+            </TouchableOpacity>
             <View style={styles.inlineButtons}>
               <View style={styles.halfButton}>
                 <Button
@@ -241,7 +254,17 @@ const RegisteredItems = () => {
           </View>
         </View>
       )}
-      <Button title="Add New Item" onPress={() => setIsFormVisible(true)} />
+      <TouchableOpacity 
+        onPress={() => setIsFormVisible(true)}  
+        style={[
+          styles.addItemButton,
+          isFormVisible && styles.addItemButtonDisabled // Apply disabled style conditionally
+        ]}
+        disabled={isFormVisible} // Disable button when form is visible
+      >
+        <FontAwesomeIcon icon={faPlus} size={24} color="#ffffff" />
+        <Text style={styles.addItemButtonText}>Add New Item</Text>
+      </TouchableOpacity>
     </View>
   );
 };

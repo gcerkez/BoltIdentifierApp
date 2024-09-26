@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {
   Alert,
-  Button,
   FlatList,
   Image,
   StyleSheet,
@@ -75,7 +74,13 @@ const HistoryScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Button title="Clear History" onPress={clearHistory} />
+      <TouchableOpacity
+        onPress={clearHistory}
+        style={styles.clearHistoryButton}
+      >
+        <FontAwesomeIcon icon={faTrash} size={24} color="#ffffff" />
+        <Text style={styles.clearHistoryButtonText}>Clear History</Text>
+      </TouchableOpacity>
       <FlatList
         data={history}
         keyExtractor={item => item.id}
@@ -133,6 +138,21 @@ const styles = StyleSheet.create({
   },
   deleteButtonText: {
     color: 'white',
+    fontWeight: 'bold',
+  },
+  clearHistoryButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#ff0000',
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 20,
+  },
+  clearHistoryButtonText: {
+    color: '#ffffff',
+    marginLeft: 10,
+    fontSize: 16,
     fontWeight: 'bold',
   },
 });

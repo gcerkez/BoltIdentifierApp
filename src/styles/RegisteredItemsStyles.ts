@@ -139,6 +139,40 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
+  addItemButtonText: {
+    color: '#ffffff',
+    marginLeft: 10,
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  addItemButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#007bff', // Example color for enabled state
+    padding: 6,
+    borderRadius: 5,
+    marginBottom: 0,
+  },
+  addItemButtonDisabled: {
+    backgroundColor: '#cccccc', // Example color for disabled state
+  },
+  cameraButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#007AFF',
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 20,
+  },
+  cameraButtonText: {
+    color: '#ffffff',
+    marginLeft: 10,
+  },
+  cameraButtonDisabled: {
+    backgroundColor: '#cccccc',
+  },
 });
 
 export default styles;
