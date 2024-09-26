@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Button, Image, Text, View, TouchableOpacity} from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faCamera } from '@fortawesome/free-solid-svg-icons';
+import { faCamera, faDeleteLeft, faEraser, faRemove, faTrashRestore, faUndo } from '@fortawesome/free-solid-svg-icons';
 import { requestCameraPermission, pickImage } from '../utils/ImagePickerUtil';
 import { processImage } from '../services/ImageProcessingService';
 import styles from '../styles/CameraScreenStyles';
@@ -56,7 +56,10 @@ const CameraScreen = () => {
       <Text>Socket Size: {measurements.socketSize.toFixed(2)} units</Text>
       <Text>Head Type: {measurements.headType}</Text>
       {imageData ? (
-        <Button title="Clear" onPress={handleClear} />
+        <TouchableOpacity onPress={handleClear} style={styles.resetButton}>
+        <FontAwesomeIcon icon={faUndo} size={24} color="#ffffff" />
+        <Text style={styles.resetButtonText}>Reset</Text>
+      </TouchableOpacity>
       ) : null}
     </View>
   );

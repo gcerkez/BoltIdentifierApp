@@ -18,6 +18,25 @@ const styles = StyleSheet.create({
   cameraButtonText: {
     color: '#ffffff',
     marginLeft: 10,
+  },
+  resetButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 5,
+    marginBottom: 0,
+    position: 'absolute', // Added to position the button at the bottom
+    bottom: 15, // Adjust as needed
+    left: 16,
+    right: 16,
+    backgroundColor: '#007bff', // Example color for enabled state
+    padding: 6
+  },
+  resetButtonText: {
+    color: '#ffffff',
+    marginLeft: 10,
+    fontSize: 16,
+    fontWeight: 'bold',
   }
 });
 
