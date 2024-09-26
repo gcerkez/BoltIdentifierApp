@@ -1,21 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, Button, TextInput, Image, Alert, TouchableOpacity } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
+import React, {useEffect, useState} from 'react';
+import {
+  Button,
+  FlatList,
+  Image,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {Picker} from '@react-native-picker/picker';
 import CheckBox from '@react-native-community/checkbox';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faEdit, faTrash, faPlus, faCamera } from '@fortawesome/free-solid-svg-icons';
-import styles from '../styles/RegisteredItemsStyles';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {faCamera, faPlus, faTrash} from '@fortawesome/free-solid-svg-icons';
+import styles from '../styles/ReferenceItemsStyles.ts';
 import {
-  loadCustomItems,
   addOrUpdateCustomItem,
+  confirmDeleteCustomItem,
   deleteCustomItem,
-  confirmDeleteCustomItem
-} from '../services/RegisteredItemsService';
+  loadCustomItems,
+} from '../services/ReferenceItemsService.ts';
 import {
-  requestCameraPermission,
-  pickImage,
   confirmDeletePhoto,
-  deletePhoto
+  deletePhoto,
+  pickImage,
+  requestCameraPermission,
 } from '../utils/ImagePickerUtil';
 
 // Predefined items with static data
@@ -23,16 +31,16 @@ const predefinedItems: CustomItem[] = [
   {
     id: '1', name: 'US Quarter', width: '24.26', height: '24.26', unit: 'mm',
     photoUris: [
-      require('../resources/predefinedItems/us-quarter/us-quarter-front.jpg'),
-      require('../resources/predefinedItems/us-quarter/us-quarter-back.jpg')
-    ]
+      require('../../assets/predefinedItems/us-quarter/us-quarter-front.jpg'),
+      require('../../assets/predefinedItems/us-quarter/us-quarter-back.jpg'),
+    ],
   },
   {
     id: '2', name: 'US Penny', width: '19.05', height: '19.05', unit: 'mm',
     photoUris: [
-      require('../resources/predefinedItems/us-penny/us-penny-front.jpg'),
-      require('../resources/predefinedItems/us-penny/us-penny-back.jpg')
-    ]
+      require('../../assets/predefinedItems/us-penny/us-penny-front.jpg'),
+      require('../../assets/predefinedItems/us-penny/us-penny-back.jpg'),
+    ],
   },
 ];
 
@@ -46,7 +54,7 @@ export interface CustomItem {
   photoUris?: (string | number)[];
 }
 
-const RegisteredItems = () => {
+const ReferenceItems = () => {
   const [customItems, setCustomItems] = useState<CustomItem[]>([]);
   const [newItem, setNewItem] = useState<Partial<CustomItem>>({
     name: '',
@@ -78,7 +86,7 @@ const RegisteredItems = () => {
       setIsFormVisible,
       isRound,
       size,
-      editingItemId
+      editingItemId,
     );
   };
 
@@ -95,7 +103,7 @@ const RegisteredItems = () => {
   };
 
   const handlePickImage = (useCamera: boolean) => {
-    pickImage(useCamera, setNewItem, 'RegisteredItems');
+    pickImage(useCamera, setNewItem, 'ReferenceItems');
   };
 
   const handleCancel = () => {
@@ -121,13 +129,13 @@ const RegisteredItems = () => {
       <FlatList
         data={[...predefinedItems, ...customItems]}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
+        renderItem={({item}) => (
           <TouchableOpacity onPress={() => setSelectedItemId(selectedItemId === item.id ? null : item.id)}>
             <View style={[
               styles.item,
               predefinedItems.includes(item) && styles.predefinedItem,
               selectedItemId === item.id && styles.selectedItem,
-              styles.roundedCorners
+              styles.roundedCorners,
             ]}>
               <View style={styles.itemHeader}>
                 <View style={styles.itemTextContainer}>
@@ -150,7 +158,7 @@ const RegisteredItems = () => {
               {selectedItemId === item.id && item.photoUris && (
                 <View style={styles.imageContainer}>
                   {item.photoUris.map((uri, index) => (
-                    <Image key={index} source={typeof uri === 'string' ? { uri } : uri} style={styles.image} />
+                    <Image key={index} source={typeof uri === 'string' ? {uri} : uri} style={styles.image} />
                   ))}
                 </View>
               )}
@@ -166,12 +174,12 @@ const RegisteredItems = () => {
       {isFormVisible && (
         <View style={[styles.formContainer, styles.roundedCorners]}>
           <View style={styles.modalHeader}>
-            <Text style={styles.modalTitle}>{editingItemId ? "Edit Item" : "Add New Item"}</Text>
+            <Text style={styles.modalTitle}>{editingItemId ? 'Edit Item' : 'Add New Item'}</Text>
           </View>
           <TextInput
             placeholder="Item Name"
             value={newItem.name}
-            onChangeText={(text) => setNewItem({ ...newItem, name: text })}
+            onChangeText={(text) => setNewItem({...newItem, name: text})}
             style={[styles.input, !newItem.name && styles.required, styles.roundedCorners]}
           />
           <View style={styles.checkboxContainer}>
@@ -195,14 +203,14 @@ const RegisteredItems = () => {
               <TextInput
                 placeholder="Item Width"
                 value={newItem.width}
-                onChangeText={(text) => handleNumericInput(text, (value) => setNewItem({ ...newItem, width: value }))}
+                onChangeText={(text) => handleNumericInput(text, (value) => setNewItem({...newItem, width: value}))}
                 style={[styles.input, !newItem.width && styles.required, styles.roundedCorners]}
                 keyboardType="numeric"
               />
               <TextInput
                 placeholder="Item Height"
                 value={newItem.height}
-                onChangeText={(text) => handleNumericInput(text, (value) => setNewItem({ ...newItem, height: value }))}
+                onChangeText={(text) => handleNumericInput(text, (value) => setNewItem({...newItem, height: value}))}
                 style={[styles.input, !newItem.height && styles.required, styles.roundedCorners]}
                 keyboardType="numeric"
               />
@@ -211,7 +219,7 @@ const RegisteredItems = () => {
           <Picker
             selectedValue={newItem.unit}
             style={styles.picker}
-            onValueChange={(itemValue) => setNewItem({ ...newItem, unit: itemValue })}
+            onValueChange={(itemValue) => setNewItem({...newItem, unit: itemValue})}
           >
             <Picker.Item label="mm" value="mm" />
             <Picker.Item label="cm" value="cm" />
@@ -221,8 +229,9 @@ const RegisteredItems = () => {
           <View style={styles.buttonContainer}>
             <View style={styles.imageContainer}>
               {newItem.photoUris && newItem.photoUris.map((uri, index) => (
-                <TouchableOpacity key={index} onPress={() => confirmDeletePhoto(index, (i) => deletePhoto(i, setNewItem))}>
-                  <Image source={{ uri: String(uri) }} style={styles.image} />
+                <TouchableOpacity key={index}
+                                  onPress={() => confirmDeletePhoto(index, (i) => deletePhoto(i, setNewItem))}>
+                  <Image source={{uri: String(uri)}} style={styles.image} />
                 </TouchableOpacity>
               ))}
             </View>
@@ -245,7 +254,7 @@ const RegisteredItems = () => {
               <View style={styles.buttonGap} />
               <View style={styles.halfButton}>
                 <Button
-                  title={editingItemId ? "Update Item" : "Add Item"}
+                  title={editingItemId ? 'Update Item' : 'Add Item'}
                   onPress={handleAddOrUpdateCustomItem}
                   disabled={!newItem.name || !newItem.photoUris || newItem.photoUris.length === 0 || (isRound ? !size : !newItem.width || !newItem.height)}
                 />
@@ -254,11 +263,11 @@ const RegisteredItems = () => {
           </View>
         </View>
       )}
-      <TouchableOpacity 
-        onPress={() => setIsFormVisible(true)}  
+      <TouchableOpacity
+        onPress={() => setIsFormVisible(true)}
         style={[
           styles.addItemButton,
-          isFormVisible && styles.addItemButtonDisabled // Apply disabled style conditionally
+          isFormVisible && styles.addItemButtonDisabled, // Apply disabled style conditionally
         ]}
         disabled={isFormVisible} // Disable button when form is visible
       >
@@ -269,4 +278,4 @@ const RegisteredItems = () => {
   );
 };
 
-export default RegisteredItems;
+export default ReferenceItems;

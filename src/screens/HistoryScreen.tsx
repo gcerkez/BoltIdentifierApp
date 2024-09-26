@@ -1,18 +1,17 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, {useCallback, useState} from 'react';
 import {
   Alert,
   FlatList,
   Image,
   StyleSheet,
   Text,
-  View,
   TouchableOpacity,
-  Button,
+  View,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
-import { useFocusEffect } from '@react-navigation/native'; // Import useFocusEffect
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {faTrash} from '@fortawesome/free-solid-svg-icons';
+import {useFocusEffect} from '@react-navigation/native'; // Import useFocusEffect
 
 interface ScanHistoryItem {
   id: string;
@@ -40,7 +39,7 @@ const HistoryScreen = () => {
   useFocusEffect(
     useCallback(() => {
       loadHistory();
-    }, [])
+    }, []),
   );
 
   const deleteHistoryItem = async (id: string) => {
@@ -55,7 +54,7 @@ const HistoryScreen = () => {
       'Clear History',
       'Are you sure you want to clear all history?',
       [
-        { text: 'Cancel', style: 'cancel' },
+        {text: 'Cancel', style: 'cancel'},
         {
           text: 'Clear',
           onPress: async () => {
@@ -64,7 +63,7 @@ const HistoryScreen = () => {
           },
         },
       ],
-      { cancelable: true },
+      {cancelable: true},
     );
   };
 
@@ -76,26 +75,32 @@ const HistoryScreen = () => {
     <View style={styles.container}>
       <FlatList
         data={history}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
+        keyExtractor={item => item.id}
+        renderItem={({item}) => (
           <TouchableOpacity
-            style={[styles.item, selectedItemId === item.id && styles.selectedItem]}
-            onPress={() => handleRowPress(item.id)}
-          >
+            style={[
+              styles.item,
+              selectedItemId === item.id && styles.selectedItem,
+            ]}
+            onPress={() => handleRowPress(item.id)}>
             <View style={styles.rowContent}>
-              <Image source={{ uri: item.imageUri }} style={styles.thumbnail} />
+              <Image source={{uri: item.imageUri}} style={styles.thumbnail} />
               <View style={styles.details}>
                 <Text>Date: {item.date}</Text>
-                <Text>Thread Spacing: {item.measurements.threadSpacing.toFixed(2)} units</Text>
+                <Text>
+                  Thread Spacing: {item.measurements.threadSpacing.toFixed(2)}{' '}
+                  units
+                </Text>
                 <Text>Length: {item.measurements.length.toFixed(2)} units</Text>
-                <Text>Socket Size: {item.measurements.socketSize.toFixed(2)} units</Text>
+                <Text>
+                  Socket Size: {item.measurements.socketSize.toFixed(2)} units
+                </Text>
                 <Text>Head Type: {item.measurements.headType}</Text>
               </View>
               {selectedItemId === item.id && (
                 <TouchableOpacity
                   style={styles.deleteButton}
-                  onPress={() => deleteHistoryItem(item.id)}
-                >
+                  onPress={() => deleteHistoryItem(item.id)}>
                   <FontAwesomeIcon icon={faTrash} size={16} color="#ffffff" />
                 </TouchableOpacity>
               )}
@@ -105,8 +110,7 @@ const HistoryScreen = () => {
       />
       <TouchableOpacity
         style={styles.clearHistoryButton}
-        onPress={clearHistory}
-      >
+        onPress={clearHistory}>
         <Text style={styles.clearHistoryButtonText}>Clear History</Text>
       </TouchableOpacity>
     </View>
@@ -117,12 +121,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: 'lightgreen', // Added background color for visibility
+    backgroundColor: 'lightgreen',
   },
   item: {
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
-    backgroundColor: '#f0f0f0', // Slightly different background color
+    backgroundColor: '#f0f0f0',
     borderRadius: 4, // Rounded corners
     padding: 8, // Padding inside the item
   },
@@ -151,9 +155,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#ff0000',
-    paddingVertical: 4, // Adjust padding to make the button smaller
+    paddingVertical: 4,
     paddingHorizontal: 8,
-    borderRadius: 4, // Match the style of the RegisteredItems screen
+    borderRadius: 4,
   },
   clearHistoryButton: {
     flexDirection: 'row',

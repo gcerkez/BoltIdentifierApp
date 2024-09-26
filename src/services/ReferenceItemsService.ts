@@ -1,9 +1,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Alert } from 'react-native';
-import { CustomItem } from '../screens/RegisteredItems';
+import {Alert} from 'react-native';
+import {CustomItem} from '../screens/ReferenceItems.tsx';
 
 // Load custom items from AsyncStorage
-export const loadCustomItems = async (setCustomItems: (items: CustomItem[]) => void) => {
+export const loadCustomItems = async (
+  setCustomItems: (items: CustomItem[]) => void,
+) => {
   const storedItems = await AsyncStorage.getItem('customItems');
   if (storedItems) {
     setCustomItems(JSON.parse(storedItems));
@@ -22,7 +24,7 @@ export const addOrUpdateCustomItem = async (
   setIsFormVisible: (isVisible: boolean) => void,
   isRound: boolean,
   size: string,
-  editingItemId: string | null
+  editingItemId: string | null,
 ) => {
   if (newItem.name && (isRound ? size : newItem.width && newItem.height)) {
     let updatedItems;
@@ -34,11 +36,12 @@ export const addOrUpdateCustomItem = async (
 
     if (editingItemId) {
       updatedItems = customItems.map(item =>
-        item.id === editingItemId ? { ...item, ...itemToSave } : item
+        item.id === editingItemId ? {...item, ...itemToSave} : item,
       );
       setEditingItemId(null);
     } else {
-      const { id, ...rest } = itemToSave;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const {id, ...rest} = itemToSave;
       const newItemWithId: CustomItem = {
         id: Date.now().toString(),
         ...rest,
@@ -61,28 +64,36 @@ export const addOrUpdateCustomItem = async (
 };
 
 // Delete a custom item
-export const deleteCustomItem = async (id: string, customItems: CustomItem[], setCustomItems: (items: CustomItem[]) => void) => {
+export const deleteCustomItem = async (
+  id: string,
+  customItems: CustomItem[],
+  setCustomItems: (items: CustomItem[]) => void,
+) => {
   const updatedItems = customItems.filter(item => item.id !== id);
   setCustomItems(updatedItems);
   await AsyncStorage.setItem('customItems', JSON.stringify(updatedItems));
 };
 
 // Confirm deletion of a custom item
-export const confirmDeleteCustomItem = (id: string, deleteCustomItem: (id: string) => void) => {
+// eslint-disable-next-line @typescript-eslint/no-shadow
+export const confirmDeleteCustomItem = (
+  id: string,
+  deleteCustomItem: (id: string) => void,
+) => {
   Alert.alert(
-    "Delete Item",
-    "Are you sure you want to delete this item?",
+    'Delete Item',
+    'Are you sure you want to delete this item?',
     [
       {
-        text: "Cancel",
-        style: "cancel"
+        text: 'Cancel',
+        style: 'cancel',
       },
       {
-        text: "Delete",
+        text: 'Delete',
         onPress: () => deleteCustomItem(id),
-        style: "destructive"
-      }
+        style: 'destructive',
+      },
     ],
-    { cancelable: true }
+    {cancelable: true},
   );
 };

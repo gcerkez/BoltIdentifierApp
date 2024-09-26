@@ -8,12 +8,12 @@ BoltIdentifierApp is a React Native application designed to analyze bolts and de
 - Analyze bolt images to determine thread spacing, length, socket size, and head type. *(Future Goal)*
 - Store and manage a history of analyzed bolts. *(Future Goal)*
 - View and delete previously analyzed bolts. *(Future Goal)*
-- Manage a list of registered items with photos and dimensions. *(Future Goal)*
+- Manage a list of reference items with photos and dimensions. *(Future Goal)*
 
 ## Screens
 
 1. **Camera Screen**: Capture and analyze bolt images.
-2. **Registered Items Screen**: Manage a list of registered items with photos and dimensions.
+2. **Reference Items Screen**: Manage a list of reference items with photos and dimensions.
 3. **History Screen**: View and manage the history of analyzed bolts.
 
 ## Development Setup
