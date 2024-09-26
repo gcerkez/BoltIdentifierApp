@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -54,7 +54,16 @@ const styles = StyleSheet.create({
   picker: {
     height: 50,
     width: '100%',
-    marginBottom: 12,
+    borderWidth: 1,
+    borderColor: 'black',
+    backgroundColor: '#ffffff',
+    borderRadius: 5,
+    marginBottom: 20,
+    elevation: 2, // Add elevation for Android
+    shadowColor: '#000', // Add shadow for iOS
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 1,
   },
   imageContainer: {
     flexDirection: 'row',
@@ -70,7 +79,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'column',
     justifyContent: 'space-between',
-    marginTop: 8,
+    marginTop: 16,
   },
   itemButtons: {
     flexDirection: 'row',
@@ -93,7 +102,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 8,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 5,

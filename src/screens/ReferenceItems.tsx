@@ -25,34 +25,7 @@ import {
   pickImage,
   requestCameraPermission,
 } from '../utils/ImagePickerUtil';
-
-// Predefined items with static data
-const predefinedItems: CustomItem[] = [
-  {
-    id: '1', name: 'US Quarter', width: '24.26', height: '24.26', unit: 'mm',
-    photoUris: [
-      require('../../assets/predefinedItems/us-quarter/us-quarter-front.jpg'),
-      require('../../assets/predefinedItems/us-quarter/us-quarter-back.jpg'),
-    ],
-  },
-  {
-    id: '2', name: 'US Penny', width: '19.05', height: '19.05', unit: 'mm',
-    photoUris: [
-      require('../../assets/predefinedItems/us-penny/us-penny-front.jpg'),
-      require('../../assets/predefinedItems/us-penny/us-penny-back.jpg'),
-    ],
-  },
-];
-
-// Interface for custom items
-export interface CustomItem {
-  id: string;
-  name: string;
-  width: string;
-  height: string;
-  unit: string;
-  photoUris?: (string | number)[];
-}
+import { CustomItem, predefinedItems } from '../utils/CommonHelper.ts';
 
 const ReferenceItems = () => {
   const [customItems, setCustomItems] = useState<CustomItem[]>([]);
@@ -119,7 +92,10 @@ const ReferenceItems = () => {
     setIsFormVisible(false);
   };
 
-  const handleNumericInput = (text: string, setter: (value: string) => void) => {
+  const handleNumericInput = (
+    text: string,
+    setter: (value: string) => void,
+  ) => {
     const filteredText = text.replace(/[^0-9.]/g, '');
     setter(filteredText);
   };
@@ -128,29 +104,45 @@ const ReferenceItems = () => {
     <View style={[styles.container, styles.roundedCorners]}>
       <FlatList
         data={[...predefinedItems, ...customItems]}
-        keyExtractor={(item) => item.id}
+        keyExtractor={item => item.id}
         renderItem={({item}) => (
-          <TouchableOpacity onPress={() => setSelectedItemId(selectedItemId === item.id ? null : item.id)}>
-            <View style={[
-              styles.item,
-              predefinedItems.includes(item) && styles.predefinedItem,
-              selectedItemId === item.id && styles.selectedItem,
-              styles.roundedCorners,
-            ]}>
+          <TouchableOpacity
+            onPress={() =>
+              setSelectedItemId(selectedItemId === item.id ? null : item.id)
+            }>
+            <View
+              style={[
+                styles.item,
+                predefinedItems.includes(item) && styles.predefinedItem,
+                selectedItemId === item.id && styles.selectedItem,
+                styles.roundedCorners,
+              ]}>
               <View style={styles.itemHeader}>
                 <View style={styles.itemTextContainer}>
                   <Text>
                     <Text style={styles.itemName}>{item.name}</Text>
-                    <Text> - {item.width === item.height ? `Diameter: ${item.width}` : `${item.width} x ${item.height}`} {item.unit}</Text>
+                    <Text>
+                      {' '}
+                      -{' '}
+                      {item.width === item.height
+                        ? `Diameter: ${item.width}`
+                        : `${item.width} x ${item.height}`}{' '}
+                      {item.unit}
+                    </Text>
                   </Text>
-                  {predefinedItems.includes(item) && <Text style={styles.predefinedSubscript}>Predefined</Text>}
-                  {customItems.includes(item) && <Text style={styles.customSubscript}>User Created</Text>}
+                  {predefinedItems.includes(item) && (
+                    <Text style={styles.predefinedSubscript}>Predefined</Text>
+                  )}
+                  {customItems.includes(item) && (
+                    <Text style={styles.customSubscript}>User Created</Text>
+                  )}
                 </View>
                 {selectedItemId === item.id && customItems.includes(item) && (
                   <TouchableOpacity
                     style={[styles.smallButton, styles.roundedCorners]}
-                    onPress={() => confirmDeleteCustomItem(item.id, handleDeleteCustomItem)}
-                  >
+                    onPress={() =>
+                      confirmDeleteCustomItem(item.id, handleDeleteCustomItem)
+                    }>
                     <FontAwesomeIcon icon={faTrash} size={16} color="#ffffff" />
                   </TouchableOpacity>
                 )}
@@ -158,13 +150,20 @@ const ReferenceItems = () => {
               {selectedItemId === item.id && item.photoUris && (
                 <View style={styles.imageContainer}>
                   {item.photoUris.map((uri, index) => (
-                    <Image key={index} source={typeof uri === 'string' ? {uri} : uri} style={styles.image} />
+                    <Image
+                      key={index}
+                      source={typeof uri === 'string' ? {uri} : uri}
+                      style={styles.image}
+                    />
                   ))}
                 </View>
               )}
               {selectedItemId === item.id && customItems.includes(item) && (
                 <View style={styles.itemButtons}>
-                  <Button title="Edit" onPress={() => handleEditCustomItem(item)} />
+                  <Button
+                    title="Edit"
+                    onPress={() => handleEditCustomItem(item)}
+                  />
                 </View>
               )}
             </View>
@@ -174,13 +173,19 @@ const ReferenceItems = () => {
       {isFormVisible && (
         <View style={[styles.formContainer, styles.roundedCorners]}>
           <View style={styles.modalHeader}>
-            <Text style={styles.modalTitle}>{editingItemId ? 'Edit Item' : 'Add New Item'}</Text>
+            <Text style={styles.modalTitle}>
+              {editingItemId ? 'Edit Item' : 'Add New Item'}
+            </Text>
           </View>
           <TextInput
             placeholder="Item Name"
             value={newItem.name}
-            onChangeText={(text) => setNewItem({...newItem, name: text})}
-            style={[styles.input, !newItem.name && styles.required, styles.roundedCorners]}
+            onChangeText={text => setNewItem({...newItem, name: text})}
+            style={[
+              styles.input,
+              !newItem.name && styles.required,
+              styles.roundedCorners,
+            ]}
           />
           <View style={styles.checkboxContainer}>
             <CheckBox
@@ -194,8 +199,12 @@ const ReferenceItems = () => {
             <TextInput
               placeholder="Item Diameter"
               value={size}
-              onChangeText={(text) => handleNumericInput(text, setSize)}
-              style={[styles.input, !size && styles.required, styles.roundedCorners]}
+              onChangeText={text => handleNumericInput(text, setSize)}
+              style={[
+                styles.input,
+                !size && styles.required,
+                styles.roundedCorners,
+              ]}
               keyboardType="numeric"
             />
           ) : (
@@ -203,15 +212,31 @@ const ReferenceItems = () => {
               <TextInput
                 placeholder="Item Width"
                 value={newItem.width}
-                onChangeText={(text) => handleNumericInput(text, (value) => setNewItem({...newItem, width: value}))}
-                style={[styles.input, !newItem.width && styles.required, styles.roundedCorners]}
+                onChangeText={text =>
+                  handleNumericInput(text, value =>
+                    setNewItem({...newItem, width: value}),
+                  )
+                }
+                style={[
+                  styles.input,
+                  !newItem.width && styles.required,
+                  styles.roundedCorners,
+                ]}
                 keyboardType="numeric"
               />
               <TextInput
                 placeholder="Item Height"
                 value={newItem.height}
-                onChangeText={(text) => handleNumericInput(text, (value) => setNewItem({...newItem, height: value}))}
-                style={[styles.input, !newItem.height && styles.required, styles.roundedCorners]}
+                onChangeText={text =>
+                  handleNumericInput(text, value =>
+                    setNewItem({...newItem, height: value}),
+                  )
+                }
+                style={[
+                  styles.input,
+                  !newItem.height && styles.required,
+                  styles.roundedCorners,
+                ]}
                 keyboardType="numeric"
               />
             </>
@@ -219,8 +244,9 @@ const ReferenceItems = () => {
           <Picker
             selectedValue={newItem.unit}
             style={styles.picker}
-            onValueChange={(itemValue) => setNewItem({...newItem, unit: itemValue})}
-          >
+            onValueChange={itemValue =>
+              setNewItem({...newItem, unit: itemValue})
+            }>
             <Picker.Item label="mm" value="mm" />
             <Picker.Item label="cm" value="cm" />
             <Picker.Item label="in" value="in" />
@@ -228,35 +254,49 @@ const ReferenceItems = () => {
           </Picker>
           <View style={styles.buttonContainer}>
             <View style={styles.imageContainer}>
-              {newItem.photoUris && newItem.photoUris.map((uri, index) => (
-                <TouchableOpacity key={index}
-                                  onPress={() => confirmDeletePhoto(index, (i) => deletePhoto(i, setNewItem))}>
-                  <Image source={{uri: String(uri)}} style={styles.image} />
-                </TouchableOpacity>
-              ))}
+              {newItem.photoUris &&
+                newItem.photoUris.map((uri, index) => (
+                  <TouchableOpacity
+                    key={index}
+                    onPress={() =>
+                      confirmDeletePhoto(index, i => deletePhoto(i, setNewItem))
+                    }>
+                    <Image source={{uri: String(uri)}} style={styles.image} />
+                  </TouchableOpacity>
+                ))}
             </View>
             <View style={styles.imageButtonGap} />
             <TouchableOpacity
-              onPress={() => requestCameraPermission().then(() => handlePickImage(true))}
-              style={[styles.cameraButton, newItem.photoUris && newItem.photoUris.length >= 3 && styles.cameraButtonDisabled]}
-              disabled={newItem.photoUris && newItem.photoUris.length >= 3}
-            >
+              onPress={() =>
+                requestCameraPermission().then(() => handlePickImage(true))
+              }
+              style={[
+                styles.cameraButton,
+                newItem.photoUris &&
+                  newItem.photoUris.length >= 3 &&
+                  styles.cameraButtonDisabled,
+              ]}
+              disabled={newItem.photoUris && newItem.photoUris.length >= 3}>
               <FontAwesomeIcon icon={faCamera} size={24} color="#ffffff" />
-              <Text style={styles.cameraButtonText}>Pick an image or take a photo</Text>
+              <Text style={styles.cameraButtonText}>
+                Pick an image or take a photo
+              </Text>
             </TouchableOpacity>
             <View style={styles.inlineButtons}>
               <View style={styles.halfButton}>
-                <Button
-                  onPress={handleCancel}
-                  title="Cancel"
-                />
+                <Button onPress={handleCancel} title="Cancel" />
               </View>
               <View style={styles.buttonGap} />
               <View style={styles.halfButton}>
                 <Button
                   title={editingItemId ? 'Update Item' : 'Add Item'}
                   onPress={handleAddOrUpdateCustomItem}
-                  disabled={!newItem.name || !newItem.photoUris || newItem.photoUris.length === 0 || (isRound ? !size : !newItem.width || !newItem.height)}
+                  disabled={
+                    !newItem.name ||
+                    !newItem.photoUris ||
+                    newItem.photoUris.length === 0 ||
+                    (isRound ? !size : !newItem.width || !newItem.height)
+                  }
                 />
               </View>
             </View>

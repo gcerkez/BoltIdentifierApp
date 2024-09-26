@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     left: 16,
     right: 16,
     backgroundColor: '#ff0000', // Example color for enabled state
-    padding: 6
+    padding: 6,
   },
   clearHistoryButtonText: {
     color: '#ffffff',

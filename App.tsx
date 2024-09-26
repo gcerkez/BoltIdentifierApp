@@ -42,7 +42,7 @@ function App(): React.JSX.Element {
             tabBarIcon: ({color, size}) => {
               let icon;
 
-              if (route.name === 'Camera') {
+              if (route.name === 'Analyze Image') {
                 icon = faCamera;
               } else if (route.name === 'Reference Items') {
                 icon = faList;
@@ -53,7 +53,7 @@ function App(): React.JSX.Element {
               return <FontAwesomeIcon icon={icon} size={size} color={color} />;
             },
           })}>
-          <Tab.Screen name="Camera" component={CameraScreen} />
+          <Tab.Screen name="Analyze Image" component={CameraScreen} />
           <Tab.Screen name="Reference Items" component={ReferenceItems} />
           <Tab.Screen name="History" component={HistoryScreen} />
         </Tab.Navigator>

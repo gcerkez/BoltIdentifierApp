@@ -1,17 +1,14 @@
-import React, { useCallback, useState } from 'react';
-import {
-  Alert,
-  FlatList,
-  Image,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faTrash, faUndo } from '@fortawesome/free-solid-svg-icons';
-import { useFocusEffect } from '@react-navigation/native';
+import React, {useCallback, useState} from 'react';
+import {FlatList, Image, Text, TouchableOpacity, View} from 'react-native';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {faTrash, faUndo} from '@fortawesome/free-solid-svg-icons';
+import {useFocusEffect} from '@react-navigation/native';
 import styles from '../styles/HistoryScreenStyles';
-import { loadHistory, deleteHistoryItem, clearHistory } from '../services/HistoryService';
+import {
+  clearHistory,
+  deleteHistoryItem,
+  loadHistory,
+} from '../services/HistoryService';
 
 interface ScanHistoryItem {
   id: string;
@@ -44,7 +41,7 @@ const HistoryScreen = () => {
       <FlatList
         data={history}
         keyExtractor={item => item.id}
-        renderItem={({ item }) => (
+        renderItem={({item}) => (
           <TouchableOpacity
             style={[
               styles.item,
@@ -52,7 +49,7 @@ const HistoryScreen = () => {
             ]}
             onPress={() => handleRowPress(item.id)}>
             <View style={styles.rowContent}>
-              <Image source={{ uri: item.imageUri }} style={styles.thumbnail} />
+              <Image source={{uri: item.imageUri}} style={styles.thumbnail} />
               <View style={styles.details}>
                 <Text>Date: {item.date}</Text>
                 <Text>
@@ -68,7 +65,14 @@ const HistoryScreen = () => {
               {selectedItemId === item.id && (
                 <TouchableOpacity
                   style={styles.deleteButton}
-                  onPress={() => deleteHistoryItem(item.id, history, setHistory, setSelectedItemId)}>
+                  onPress={() =>
+                    deleteHistoryItem(
+                      item.id,
+                      history,
+                      setHistory,
+                      setSelectedItemId,
+                    )
+                  }>
                   <FontAwesomeIcon icon={faTrash} size={16} color="#ffffff" />
                 </TouchableOpacity>
               )}
@@ -79,7 +83,7 @@ const HistoryScreen = () => {
       <TouchableOpacity
         style={styles.clearHistoryButton}
         onPress={() => clearHistory(setHistory)}>
-          <FontAwesomeIcon icon={faUndo} size={24} color="#ffffff" />
+        <FontAwesomeIcon icon={faUndo} size={24} color="#ffffff" />
         <Text style={styles.clearHistoryButtonText}>Clear History</Text>
       </TouchableOpacity>
     </View>
