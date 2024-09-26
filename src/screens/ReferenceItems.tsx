@@ -12,20 +12,20 @@ import {Picker} from '@react-native-picker/picker';
 import CheckBox from '@react-native-community/checkbox';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faCamera, faPlus, faTrash} from '@fortawesome/free-solid-svg-icons';
-import styles from '../styles/ReferenceItemsStyles.ts';
+import styles from '../styles/ReferenceItemsStyles';
 import {
   addOrUpdateCustomItem,
   confirmDeleteCustomItem,
   deleteCustomItem,
   loadCustomItems,
-} from '../services/ReferenceItemsService.ts';
+} from '../services/ReferenceItemsService';
 import {
   confirmDeletePhoto,
   deletePhoto,
   pickImage,
   requestCameraPermission,
 } from '../utils/ImagePickerUtil';
-import { CustomItem, predefinedItems } from '../utils/CommonHelper.ts';
+import { CustomItem, predefinedItems } from '../utils/CommonHelper';
 
 const ReferenceItems = () => {
   const [customItems, setCustomItems] = useState<CustomItem[]>([]);
@@ -41,17 +41,24 @@ const ReferenceItems = () => {
   const [isRound, setIsRound] = useState(false);
   const [size, setSize] = useState('');
   const [isFormVisible, setIsFormVisible] = useState(false);
+  const [referenceItems, setReferenceItems] = useState<CustomItem[]>([]);
 
   // Load custom items on component mount
   useEffect(() => {
-    loadCustomItems(setCustomItems);
+    loadCustomItems((items) => {
+      setCustomItems(items);
+      setReferenceItems([...predefinedItems, ...items]);
+    });
   }, []);
 
   const handleAddOrUpdateCustomItem = () => {
     addOrUpdateCustomItem(
       newItem,
       customItems,
-      setCustomItems,
+      (updatedItems) => {
+        setCustomItems(updatedItems);
+        setReferenceItems([...predefinedItems, ...updatedItems]);
+      },
       setNewItem,
       setEditingItemId,
       setSize,
@@ -64,7 +71,10 @@ const ReferenceItems = () => {
   };
 
   const handleDeleteCustomItem = (id: string) => {
-    deleteCustomItem(id, customItems, setCustomItems);
+    deleteCustomItem(id, customItems, (updatedItems) => {
+      setCustomItems(updatedItems);
+      setReferenceItems([...predefinedItems, ...updatedItems]);
+    });
   };
 
   const handleEditCustomItem = (item: CustomItem) => {
@@ -103,7 +113,7 @@ const ReferenceItems = () => {
   return (
     <View style={[styles.container, styles.roundedCorners]}>
       <FlatList
-        data={[...predefinedItems, ...customItems]}
+        data={referenceItems}
         keyExtractor={item => item.id}
         renderItem={({item}) => (
           <TouchableOpacity

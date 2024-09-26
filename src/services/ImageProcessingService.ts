@@ -1,11 +1,13 @@
 import RNFS from 'react-native-fs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ImageResizer from 'react-native-image-resizer';
+import { CustomItem } from '../utils/CommonHelper';
 
 export const processImage = async (
   uri: string,
   setImageData: Function,
   setMeasurements: Function,
+  referenceItem: CustomItem
 ) => {
   console.log('processImage called with uri:', uri);
   const imageData = await RNFS.readFile(uri, 'base64');
@@ -19,7 +21,7 @@ export const processImage = async (
       'JPEG',
       100,
     );
-    const pixelPerUnit = calculatePixelPerUnit(resizedImage);
+    const pixelPerUnit = calculatePixelPerUnit(resizedImage, referenceItem);
     const dimensions = measureDimensions(resizedImage, pixelPerUnit);
     setMeasurements(dimensions);
     saveScanHistory(uri, dimensions); // Save the scan history
@@ -28,19 +30,13 @@ export const processImage = async (
   }
 };
 
-const calculatePixelPerUnit = (img: {
-  width: number;
-  height: number;
-}): number => {
-  const referenceLengthInPixels = 100; // Placeholder value
-  const referenceLengthInUnits = 10; // Placeholder value (e.g., 10 mm)
+const calculatePixelPerUnit = (img: { width: number; height: number }, referenceItem: CustomItem): number => {
+  const referenceLengthInPixels = 100; // Placeholder value, should be calculated from the image
+  const referenceLengthInUnits = parseFloat(referenceItem.width); // Assuming width is the diameter/width of the reference item
   return referenceLengthInPixels / referenceLengthInUnits;
 };
 
-const measureDimensions = (
-  img: {width: number; height: number},
-  pixelPerUnit: number,
-) => {
+const measureDimensions = (img: { width: number; height: number }, pixelPerUnit: number) => {
   const threadSpacingInPixels = 20; // Placeholder value
   const lengthInPixels = 200; // Placeholder value
   const socketSizeInPixels = 50; // Placeholder value

@@ -30,14 +30,19 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 1,
   },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 20,
+  },
   cameraButton: {
+    flex: 0.48, // Half width with some space between
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#007AFF',
     padding: 10,
     borderRadius: 5,
-    marginBottom: 20,
   },
   cameraButtonDisabled: {
     backgroundColor: '#cccccc', // Disabled state color
@@ -47,14 +52,11 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   resetButton: {
+    flex: 0.48, // Half width with some space between
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 5,
-    position: 'absolute', // Added to position the button at the bottom
-    bottom: 15, // Adjust as needed
-    left: 16,
-    right: 16,
     backgroundColor: '#007bff', // Example color for enabled state
     padding: 10,
   },
@@ -75,10 +77,33 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 20,
+    backgroundColor: '#ffffff', // White background for the table
+    borderWidth: 1,
+    borderColor: '#000000', // Black border for the table
+    padding: 10,
+  },
+  metadataRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
+    borderBottomWidth: 1,
+    borderBottomColor: '#000000', // Black border for rows
+    paddingVertical: 5,
+  },
+  metadataColumn: {
+    flex: 2,
+    alignItems: 'center',
   },
   metadataText: {
+    width:200,
     fontSize: 18,
-    marginBottom: 10,
+    flex: 2, // Increase flex to allocate more space for the text
+    textAlign: 'center',
+  },
+  inlinePicker: {
+    height: 30,
+    width: 100,
   },
 });
 
