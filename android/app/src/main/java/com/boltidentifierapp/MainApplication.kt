@@ -1,4 +1,4 @@
-package com.nutboltidentifierapp
+package com.BoltIdentifierapp
 
 import android.app.Application
 import com.facebook.react.PackageList

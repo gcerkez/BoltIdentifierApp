@@ -7,9 +7,12 @@ import {
   StyleSheet,
   Text,
   View,
+  TouchableOpacity,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {RectButton, Swipeable} from 'react-native-gesture-handler';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 interface ScanHistoryItem {
   id: string;
@@ -64,7 +67,7 @@ const HistoryScreen = () => {
     <RectButton
       style={styles.deleteButton}
       onPress={() => deleteHistoryItem(id)}>
-      <Text style={styles.deleteButtonText}>Delete</Text>
+      <FontAwesomeIcon icon={faTrash} size={16} color="#ffffff" />
     </RectButton>
   );
 

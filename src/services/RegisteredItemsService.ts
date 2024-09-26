@@ -3,6 +3,7 @@ import { Alert, PermissionsAndroid } from 'react-native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { CustomItem } from '../screens/RegisteredItems';
 
+// Load custom items from AsyncStorage
 export const loadCustomItems = async (setCustomItems: (items: CustomItem[]) => void) => {
   const storedItems = await AsyncStorage.getItem('customItems');
   if (storedItems) {
@@ -10,6 +11,7 @@ export const loadCustomItems = async (setCustomItems: (items: CustomItem[]) => v
   }
 };
 
+// Add or update a custom item
 export const addOrUpdateCustomItem = async (
   newItem: Partial<CustomItem>,
   customItems: CustomItem[],
@@ -55,16 +57,18 @@ export const addOrUpdateCustomItem = async (
     });
     setSize('');
     setIsRound(false);
-    setIsFormVisible(false); // Hide form after adding/updating item
+    setIsFormVisible(false);
   }
 };
 
+// Delete a custom item
 export const deleteCustomItem = async (id: string, customItems: CustomItem[], setCustomItems: (items: CustomItem[]) => void) => {
   const updatedItems = customItems.filter(item => item.id !== id);
   setCustomItems(updatedItems);
   await AsyncStorage.setItem('customItems', JSON.stringify(updatedItems));
 };
 
+// Confirm deletion of a custom item
 export const confirmDeleteCustomItem = (id: string, deleteCustomItem: (id: string) => void) => {
   Alert.alert(
     "Delete Item",
@@ -84,6 +88,7 @@ export const confirmDeleteCustomItem = (id: string, deleteCustomItem: (id: strin
   );
 };
 
+// Request camera permission
 export const requestCameraPermission = async () => {
   try {
     const granted = await PermissionsAndroid.request(
@@ -106,6 +111,7 @@ export const requestCameraPermission = async () => {
   }
 };
 
+// Pick an image from the gallery or take a new photo
 export const pickImage = async (useCamera: boolean, setNewItem: (item: Partial<CustomItem>) => void) => {
   let result;
   if (useCamera) {
@@ -135,6 +141,7 @@ export const pickImage = async (useCamera: boolean, setNewItem: (item: Partial<C
   }
 };
 
+// Confirm deletion of a photo
 export const confirmDeletePhoto = (index: number, deletePhoto: (index: number) => void) => {
   Alert.alert(
     "Delete Photo",
@@ -154,6 +161,7 @@ export const confirmDeletePhoto = (index: number, deletePhoto: (index: number) =
   );
 };
 
+// Delete a photo from the item
 export const deletePhoto = (index: number, setNewItem: (item: Partial<CustomItem>) => void) => {
   setNewItem((prevItem) => ({
     ...prevItem,

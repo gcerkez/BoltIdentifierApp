@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, Button, TextInput, Image, Alert, TouchableOpacity } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import CheckBox from '@react-native-community/checkbox';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faEdit, faTrash, faPlus, faCamera } from '@fortawesome/free-solid-svg-icons';
 import styles from './RegisteredItemsStyles';
 import {
   loadCustomItems,
@@ -14,6 +16,7 @@ import {
   deletePhoto
 } from '../services/RegisteredItemsService';
 
+// Predefined items with static data
 const predefinedItems: CustomItem[] = [
   {
     id: '1', name: 'US Quarter', width: '24.26', height: '24.26', unit: 'mm',
@@ -31,6 +34,7 @@ const predefinedItems: CustomItem[] = [
   },
 ];
 
+// Interface for custom items
 export interface CustomItem {
   id: string;
   name: string;
@@ -55,6 +59,7 @@ const RegisteredItems = () => {
   const [size, setSize] = useState('');
   const [isFormVisible, setIsFormVisible] = useState(false);
 
+  // Load custom items on component mount
   useEffect(() => {
     loadCustomItems(setCustomItems);
   }, []);
@@ -84,7 +89,7 @@ const RegisteredItems = () => {
     setEditingItemId(item.id);
     setIsRound(item.width === item.height);
     setSize(item.width === item.height ? item.width : '');
-    setIsFormVisible(true); // Show form when editing an item
+    setIsFormVisible(true);
   };
 
   const handlePickImage = (useCamera: boolean) => {
@@ -131,7 +136,7 @@ const RegisteredItems = () => {
                     style={[styles.smallButton, styles.roundedCorners]}
                     onPress={() => confirmDeleteCustomItem(item.id, handleDeleteCustomItem)}
                   >
-                    <Text style={styles.smallButtonText}>Delete</Text>
+                    <FontAwesomeIcon icon={faTrash} size={16} color="#ffffff" />
                   </TouchableOpacity>
                 )}
               </View>

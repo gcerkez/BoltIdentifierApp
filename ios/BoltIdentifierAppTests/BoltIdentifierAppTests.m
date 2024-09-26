@@ -7,11 +7,11 @@
 #define TIMEOUT_SECONDS 600
 #define TEXT_TO_LOOK_FOR @"Welcome to React"
 
-@interface NutBoltIdentifierAppTests : XCTestCase
+@interface BoltIdentifierAppTests : XCTestCase
 
 @end
 
-@implementation NutBoltIdentifierAppTests
+@implementation BoltIdentifierAppTests
 
 - (BOOL)findSubviewInView:(UIView *)view matching:(BOOL (^)(UIView *view))test
 {

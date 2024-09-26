@@ -4,31 +4,31 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: 'lightyellow', // Added background color for visibility
+    backgroundColor: 'lightyellow',
   },
   item: {
     padding: 8,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
-    flexDirection: 'column', // Change to column for vertical layout
-    alignItems: 'flex-start', // Align items to the start
-    borderWidth: 1, // Add thin border
-    borderColor: '#ccc', // Border color
-    borderRadius: 4, // Ensure rounded corners
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 4,
   },
   itemHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     width: '100%',
-    marginBottom: 8, // Add margin to separate header from images
+    marginBottom: 8,
   },
   itemTextContainer: {
     flex: 1,
-    marginBottom: 8, // Add margin to separate text from images
+    marginBottom: 8,
   },
   predefinedItem: {
-    backgroundColor: '#e0e0e0', // Special background for predefined items
+    backgroundColor: '#e0e0e0',
   },
   predefinedSubscript: {
     fontSize: 10,
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     color: 'blue',
   },
   selectedItem: {
-    backgroundColor: '#d0f0c0', // Highlight color for selected item
+    backgroundColor: '#d0f0c0',
   },
   input: {
     height: 40,
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   imageContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginBottom: 8, // Add margin to separate images from buttons
+    marginBottom: 8,
   },
   image: {
     width: 100,
@@ -68,14 +68,14 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   buttonContainer: {
-    flexDirection: 'column', // Change to column for vertical layout
+    flexDirection: 'column',
     justifyContent: 'space-between',
     marginTop: 8,
   },
   itemButtons: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '100%', // Ensure buttons take full width
+    width: '100%',
   },
   checkboxContainer: {
     flexDirection: 'row',
@@ -120,23 +120,23 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   imageButtonGap: {
-    marginBottom: 2, // Add a 2-pixel gap
+    marginBottom: 2,
   },
   smallButton: {
     paddingVertical: 4,
     paddingHorizontal: 8,
-    backgroundColor: '#ff0000', // Red background for delete button
+    backgroundColor: '#ff0000',
     borderRadius: 4,
   },
   smallButtonText: {
-    fontSize: 12, // Smaller font size
-    color: '#ffffff', // White text color
+    fontSize: 12,
+    color: '#ffffff',
   },
   roundedCorners: {
-    borderRadius: 4, // Same border radius as the delete button
+    borderRadius: 4,
   },
   itemName: {
-    fontSize: 16, // 1 size larger than the default
+    fontSize: 16,
     fontWeight: 'bold',
   },
 });

@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
-import {Button, Image, Text, View, StyleSheet} from 'react-native';
+import {Button, Image, Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import RNFS from 'react-native-fs';
 import {launchCamera} from 'react-native-image-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faCamera } from '@fortawesome/free-solid-svg-icons';
 
 const CameraScreen = () => {
   const [measurements, setMeasurements] = useState({
