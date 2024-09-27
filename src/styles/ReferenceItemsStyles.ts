@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     elevation: 2, // Add elevation for Android
     shadowColor: '#000', // Add shadow for iOS
-    shadowOffset: { width: 0, height: 1 },
+    shadowOffset: {width: 0, height: 1},
     shadowOpacity: 0.2,
     shadowRadius: 1,
   },
