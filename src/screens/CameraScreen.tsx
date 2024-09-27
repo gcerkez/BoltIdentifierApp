@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { Image, Text, TouchableOpacity, View, Alert } from 'react-native';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faCamera, faUndo } from '@fortawesome/free-solid-svg-icons';
-import { loadCustomItems } from '../services/ReferenceItemsService';
+import React, {useEffect, useState} from 'react';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {faCamera, faUndo} from '@fortawesome/free-solid-svg-icons';
+import {loadCustomItems} from '../services/ReferenceItemsService';
 import styles from '../styles/CameraScreenStyles';
-import { CustomItem, predefinedItems } from '../utils/CommonHelper';
-import { handlePickImage, handleTakePicture } from '../services/CameraService';
+import {CustomItem, predefinedItems} from '../utils/CommonHelper';
+import {handlePickImage, handleTakePicture} from '../services/CameraService';
 import UnitPicker from '../components/UnitPicker';
 import ReferenceItemPicker from '../components/ReferenceItemPicker';
 
@@ -18,7 +18,9 @@ const CameraScreen = () => {
   });
   const [imageData, setImageData] = useState('');
   const [referenceItems, setReferenceItems] = useState<CustomItem[]>([]);
-  const [selectedReferenceItem, setSelectedReferenceItem] = useState<string | null>(null);
+  const [selectedReferenceItem, setSelectedReferenceItem] = useState<
+    string | null
+  >(null);
   const [selectedUnits, setSelectedUnits] = useState({
     threadSpacing: 'mm',
     length: 'mm',
@@ -59,7 +61,8 @@ const CameraScreen = () => {
     <View style={styles.container}>
       <View style={styles.pickerContainer}>
         <Text style={styles.pickerLabel}>
-          Reference Item to be Included in Picture <Text style={styles.required}>*</Text>
+          Reference Item to be Included in Picture{' '}
+          <Text style={styles.required}>*</Text>
         </Text>
         <ReferenceItemPicker
           selectedReferenceItem={selectedReferenceItem}
@@ -69,13 +72,22 @@ const CameraScreen = () => {
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
-          onPress={() => handleTakePicture(selectedReferenceItem, (useCamera) => handlePickImage(useCamera, selectedReferenceItem, combinedItems, setImageData, setMeasurements))}
+          onPress={() =>
+            handleTakePicture(selectedReferenceItem, useCamera =>
+              handlePickImage(
+                useCamera,
+                selectedReferenceItem,
+                combinedItems,
+                setImageData,
+                setMeasurements,
+              ),
+            )
+          }
           style={[
             styles.cameraButton,
             !selectedReferenceItem && styles.cameraButtonDisabled,
           ]}
-          disabled={!selectedReferenceItem}
-        >
+          disabled={!selectedReferenceItem}>
           <FontAwesomeIcon icon={faCamera} size={24} color="#ffffff" />
           <Text style={styles.cameraButtonText}>Take Picture</Text>
         </TouchableOpacity>
@@ -88,7 +100,7 @@ const CameraScreen = () => {
       </View>
       {imageData ? (
         <Image
-          source={{ uri: 'data:image/jpeg;base64,' + imageData }}
+          source={{uri: 'data:image/jpeg;base64,' + imageData}}
           style={styles.image}
         />
       ) : null}
@@ -99,13 +111,18 @@ const CameraScreen = () => {
           </View>
           <View style={styles.metadataColumn}>
             <Text style={styles.metadataText}>
-              {convertMeasurement(measurements.threadSpacing, selectedUnits.threadSpacing).toFixed(2)}
+              {convertMeasurement(
+                measurements.threadSpacing,
+                selectedUnits.threadSpacing,
+              ).toFixed(2)}
             </Text>
           </View>
           <View style={styles.metadataColumn}>
             <UnitPicker
               selectedUnit={selectedUnits.threadSpacing}
-              onValueChange={(itemValue: string) => setSelectedUnits({ ...selectedUnits, threadSpacing: itemValue })}
+              onValueChange={(itemValue: string) =>
+                setSelectedUnits({...selectedUnits, threadSpacing: itemValue})
+              }
             />
           </View>
         </View>
@@ -115,13 +132,18 @@ const CameraScreen = () => {
           </View>
           <View style={styles.metadataColumn}>
             <Text style={styles.metadataText}>
-              {convertMeasurement(measurements.length, selectedUnits.length).toFixed(2)}
+              {convertMeasurement(
+                measurements.length,
+                selectedUnits.length,
+              ).toFixed(2)}
             </Text>
           </View>
           <View style={styles.metadataColumn}>
             <UnitPicker
               selectedUnit={selectedUnits.length}
-              onValueChange={(itemValue: string) => setSelectedUnits({ ...selectedUnits, length: itemValue })}
+              onValueChange={(itemValue: string) =>
+                setSelectedUnits({...selectedUnits, length: itemValue})
+              }
             />
           </View>
         </View>
@@ -131,17 +153,22 @@ const CameraScreen = () => {
           </View>
           <View style={styles.metadataColumn}>
             <Text style={styles.metadataText}>
-              {convertMeasurement(measurements.socketSize, selectedUnits.socketSize).toFixed(2)}
+              {convertMeasurement(
+                measurements.socketSize,
+                selectedUnits.socketSize,
+              ).toFixed(2)}
             </Text>
           </View>
           <View style={styles.metadataColumn}>
             <UnitPicker
               selectedUnit={selectedUnits.socketSize}
-              onValueChange={(itemValue: string) => setSelectedUnits({ ...selectedUnits, socketSize: itemValue })}
+              onValueChange={(itemValue: string) =>
+                setSelectedUnits({...selectedUnits, socketSize: itemValue})
+              }
             />
           </View>
         </View>
-        <View style={[styles.metadataRow, { borderBottomWidth: 0 }]}>
+        <View style={[styles.metadataRow, {borderBottomWidth: 0}]}>
           <View style={styles.metadataColumn}>
             <Text style={styles.metadataText}>Head Type</Text>
           </View>

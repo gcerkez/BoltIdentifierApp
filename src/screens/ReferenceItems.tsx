@@ -23,9 +23,9 @@ import {
   confirmDeletePhoto,
   deletePhoto,
   pickImage,
-  requestCameraPermission,
 } from '../utils/ImagePickerUtil';
-import { CustomItem, predefinedItems } from '../utils/CommonHelper';
+import {CustomItem, predefinedItems} from '../utils/CommonHelper';
+import {handleTakePicture} from '../services/CameraService';
 
 const ReferenceItems = () => {
   const [customItems, setCustomItems] = useState<CustomItem[]>([]);
@@ -45,7 +45,7 @@ const ReferenceItems = () => {
 
   // Load custom items on component mount
   useEffect(() => {
-    loadCustomItems((items) => {
+    loadCustomItems(items => {
       setCustomItems(items);
       setReferenceItems([...predefinedItems, ...items]);
     });
@@ -55,7 +55,7 @@ const ReferenceItems = () => {
     addOrUpdateCustomItem(
       newItem,
       customItems,
-      (updatedItems) => {
+      updatedItems => {
         setCustomItems(updatedItems);
         setReferenceItems([...predefinedItems, ...updatedItems]);
       },
@@ -71,7 +71,7 @@ const ReferenceItems = () => {
   };
 
   const handleDeleteCustomItem = (id: string) => {
-    deleteCustomItem(id, customItems, (updatedItems) => {
+    deleteCustomItem(id, customItems, updatedItems => {
       setCustomItems(updatedItems);
       setReferenceItems([...predefinedItems, ...updatedItems]);
     });
@@ -277,9 +277,7 @@ const ReferenceItems = () => {
             </View>
             <View style={styles.imageButtonGap} />
             <TouchableOpacity
-              onPress={() =>
-                requestCameraPermission().then(() => handlePickImage(true))
-              }
+              onPress={() => handleTakePicture(selectedItemId, handlePickImage)}
               style={[
                 styles.cameraButton,
                 newItem.photoUris &&

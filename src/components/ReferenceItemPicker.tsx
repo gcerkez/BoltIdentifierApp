@@ -1,6 +1,6 @@
 import React from 'react';
-import { Picker } from '@react-native-picker/picker';
-import { CustomItem } from '../utils/CommonHelper';
+import {Picker} from '@react-native-picker/picker';
+import {CustomItem} from '../utils/CommonHelper';
 import styles from '../styles/CameraScreenStyles';
 
 interface ReferenceItemPickerProps {
@@ -9,12 +9,15 @@ interface ReferenceItemPickerProps {
   combinedItems: CustomItem[];
 }
 
-const ReferenceItemPicker: React.FC<ReferenceItemPickerProps> = ({ selectedReferenceItem, onValueChange, combinedItems }) => (
+const ReferenceItemPicker: React.FC<ReferenceItemPickerProps> = ({
+  selectedReferenceItem,
+  onValueChange,
+  combinedItems,
+}) => (
   <Picker
     selectedValue={selectedReferenceItem || ''}
     onValueChange={onValueChange}
-    style={styles.picker}
-  >
+    style={styles.picker}>
     <Picker.Item label="Select Reference Item" value={null} />
     {combinedItems.map(item => (
       <Picker.Item key={item.id} label={item.name} value={item.id} />

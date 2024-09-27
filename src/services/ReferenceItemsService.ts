@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Alert} from 'react-native';
-import { CustomItem } from '../utils/CommonHelper';
+import {CustomItem} from '../utils/CommonHelper';
 
 // Load custom items from AsyncStorage
 export const loadCustomItems = async (

@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     elevation: 2, // Add elevation for Android
     shadowColor: '#000', // Add shadow for iOS
-    shadowOffset: { width: 0, height: 1 },
+    shadowOffset: {width: 0, height: 1},
     shadowOpacity: 0.2,
     shadowRadius: 1,
   },
@@ -81,6 +81,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#000000', // Black border for the table
     padding: 10,
+    maxHeight: 200, // Set static height to a little less than half the view space
   },
   metadataRow: {
     flexDirection: 'row',
@@ -96,7 +97,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   metadataText: {
-    width:200,
+    width: 200,
     fontSize: 18,
     flex: 2, // Increase flex to allocate more space for the text
     textAlign: 'center',
