@@ -17,8 +17,8 @@ export const predefinedItems: CustomItem[] = [
     height: '24.26',
     unit: 'mm',
     photoUris: [
-      require('../../assets/predefinedItems/us-quarter/us-quarter-front.jpg'),
-      require('../../assets/predefinedItems/us-quarter/us-quarter-back.jpg'),
+      require('../assets/predefinedItems/us-quarter/us-quarter-front.jpg'),
+      require('../assets/predefinedItems/us-quarter/us-quarter-back.jpg'),
     ],
   },
   {
@@ -28,8 +28,8 @@ export const predefinedItems: CustomItem[] = [
     height: '19.05',
     unit: 'mm',
     photoUris: [
-      require('../../assets/predefinedItems/us-penny/us-penny-front.jpg'),
-      require('../../assets/predefinedItems/us-penny/us-penny-back.jpg'),
+      require('../assets/predefinedItems/us-penny/us-penny-front.jpg'),
+      require('../assets/predefinedItems/us-penny/us-penny-back.jpg'),
     ],
   },
 ];

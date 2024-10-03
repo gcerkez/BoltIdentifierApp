@@ -41,7 +41,7 @@ const ReferenceItems = () => {
   const [isRound, setIsRound] = useState(false);
   const [size, setSize] = useState('');
   const [isFormVisible, setIsFormVisible] = useState(false);
-  const [referenceItems, setReferenceItems] = useState<CustomItem[]>([]);
+  const [referenceItems, setReferenceItems] = useState<CustomItem[]>(predefinedItems);
 
   // Load custom items on component mount
   useEffect(() => {
