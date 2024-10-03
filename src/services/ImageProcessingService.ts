@@ -1,6 +1,6 @@
 import RNFS from 'react-native-fs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import ImageResizer from 'react-native-image-resizer';
+import ImageResizer from '@bam.tech/react-native-image-resizer';
 import {CustomItem} from '../utils/CommonHelper';
 
 export const processImage = async (

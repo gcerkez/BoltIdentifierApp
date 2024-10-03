@@ -24,6 +24,13 @@ BoltIdentifierApp is a React Native application designed to analyze bolts and de
 - React Native CLI
 - Android Studio (for Android development)
 - Xcode (for iOS development, macOS only)
+- Android SDK
+   - set the ANDROID_HOME and add the following to PATH
+      - %ANDROID_HOME%\platforms
+      - %ANDROID_HOME%\platform-tools
+      - %ANDROID_HOME%\build-tools
+      - %ANDROID_HOME%\tools\bin
+
 
 ### Installation
 
@@ -74,6 +81,7 @@ BoltIdentifierApp is a React Native application designed to analyze bolts and de
      npx react-native doctor
      ```
    - Follow the instructions provided by the doctor to fix any issues.
+      - NOTE: I cannot seem to get adb or Android SDK to show in the doctor tool but they work
 
 2. **Permissions:**
    - Ensure the app has the necessary permissions to access the camera and storage. This is typically handled by the `react-native-image-picker` library, but you may need to adjust settings in your `AndroidManifest.xml` and `Info.plist` files.
