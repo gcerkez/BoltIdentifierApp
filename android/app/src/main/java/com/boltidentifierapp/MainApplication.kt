@@ -1,6 +1,7 @@
-package com.BoltIdentifierapp
+package com.boltidentifierapp
 
 import android.app.Application
+import com.BoltIdentifierapp.BuildConfig
 import com.facebook.react.PackageList
 import com.facebook.react.ReactApplication
 import com.facebook.react.ReactHost
