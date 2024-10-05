@@ -1,5 +1,4 @@
 apply plugin: "com.android.application"
-apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
 
 /**
@@ -112,7 +111,7 @@ android {
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
-    implementation("com.quickbirdstudios:opencv-contrib:3.4.15")
+    implementation project(':opencv')
 
     if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")
