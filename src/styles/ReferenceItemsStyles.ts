@@ -1,186 +1,270 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
+import { Theme } from '../constants/Theme';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
-    backgroundColor: 'lightyellow',
+    backgroundColor: Theme.colors.background,
+    padding: Theme.spacing.md,
+  },
+  filterRow: {
+    flexDirection: 'row',
+    marginBottom: Theme.spacing.md,
+    gap: Theme.spacing.xs,
+  },
+  filterPill: {
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: Theme.borderRadius.full,
+    backgroundColor: Theme.colors.card,
+    borderWidth: 1,
+    borderColor: Theme.colors.border,
+  },
+  filterPillActive: {
+    backgroundColor: Theme.colors.primary,
+    borderColor: Theme.colors.primary,
+  },
+  filterPillText: {
+    fontSize: Theme.typography.xs,
+    color: Theme.colors.textMuted,
+    fontWeight: '600',
+  },
+  filterPillTextActive: {
+    color: '#ffffff',
+    fontWeight: '700',
+  },
+  listContent: {
+    paddingBottom: 80,
   },
   item: {
-    padding: 8,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-    flexDirection: 'column',
-    alignItems: 'flex-start',
+    backgroundColor: Theme.colors.card,
+    borderRadius: Theme.borderRadius.md,
+    padding: Theme.spacing.md,
+    marginBottom: Theme.spacing.sm,
     borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 4,
+    borderColor: Theme.colors.border,
+  },
+  predefinedItem: {
+    borderLeftWidth: 4,
+    borderLeftColor: Theme.colors.primary,
+  },
+  customItem: {
+    borderLeftWidth: 4,
+    borderLeftColor: Theme.colors.accent,
+  },
+  selectedItem: {
+    borderColor: Theme.colors.primary,
+    backgroundColor: '#f0fdf4', // Light mint
   },
   itemHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: '100%',
-    marginBottom: 8,
   },
   itemTextContainer: {
     flex: 1,
-    marginBottom: 8,
   },
-  predefinedItem: {
-    backgroundColor: '#e0e0e0',
+  itemName: {
+    fontSize: Theme.typography.md,
+    fontWeight: 'bold',
+    color: Theme.colors.text,
   },
-  predefinedSubscript: {
-    fontSize: 10,
-    color: 'red',
+  itemDimension: {
+    fontSize: Theme.typography.sm,
+    color: Theme.colors.textMuted,
+    marginTop: 2,
   },
-  customSubscript: {
-    fontSize: 10,
-    color: 'blue',
+  badgeRow: {
+    flexDirection: 'row',
+    marginTop: 4,
+    gap: 6,
   },
-  selectedItem: {
-    backgroundColor: '#d0f0c0',
-  },
-  input: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 12,
+  badge: {
     paddingHorizontal: 8,
+    paddingVertical: 2,
+    borderRadius: Theme.borderRadius.full,
   },
-  required: {
-    borderColor: 'red',
+  predefinedBadge: {
+    backgroundColor: '#eff6ff',
   },
-  picker: {
-    height: 50,
-    width: '100%',
-    borderWidth: 1,
-    borderColor: 'black',
-    backgroundColor: '#ffffff',
-    borderRadius: 5,
-    marginBottom: 20,
-    elevation: 2, // Add elevation for Android
-    shadowColor: '#000', // Add shadow for iOS
-    shadowOffset: {width: 0, height: 1},
-    shadowOpacity: 0.2,
-    shadowRadius: 1,
+  customBadge: {
+    backgroundColor: '#ecfdf5',
+  },
+  badgeText: {
+    fontSize: Theme.typography.xs - 1,
+    fontWeight: '700',
+  },
+  predefinedBadgeText: {
+    color: Theme.colors.primary,
+  },
+  customBadgeText: {
+    color: Theme.colors.success,
+  },
+  actionButtonsRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Theme.spacing.xs,
+  },
+  iconBtn: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: '#f1f5f9',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  deleteBtn: {
+    backgroundColor: '#fee2e2',
   },
   imageContainer: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginBottom: 8,
+    marginTop: Theme.spacing.sm,
+    gap: Theme.spacing.xs,
   },
   image: {
-    width: 100,
-    height: 100,
-    marginRight: 8,
-    marginBottom: 8,
+    width: 64,
+    height: 64,
+    borderRadius: Theme.borderRadius.sm,
+    backgroundColor: '#e2e8f0',
   },
-  buttonContainer: {
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    marginTop: 16,
-  },
-  itemButtons: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
-  },
-  checkboxContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 12,
-  },
-  checkbox: {
-    marginRight: 8,
-  },
-  checkboxLabel: {
-    fontSize: 16,
-  },
+  // Modal / Form Styles
   formContainer: {
-    padding: 16,
-    backgroundColor: 'white',
-    borderRadius: 8,
-    shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 5,
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    top: 0,
+    backgroundColor: Theme.colors.surfaceOverlay,
+    justifyContent: 'flex-end',
   },
-  inlineButtons: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 8,
-  },
-  halfButton: {
-    flex: 1,
-  },
-  buttonGap: {
-    width: 8,
+  formCard: {
+    backgroundColor: Theme.colors.card,
+    borderTopLeftRadius: Theme.borderRadius.lg,
+    borderTopRightRadius: Theme.borderRadius.lg,
+    padding: Theme.spacing.lg,
+    maxHeight: '90%',
   },
   modalHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 16,
+    marginBottom: Theme.spacing.md,
   },
   modalTitle: {
-    fontSize: 18,
+    fontSize: Theme.typography.lg,
     fontWeight: 'bold',
+    color: Theme.colors.text,
   },
-  imageButtonGap: {
-    marginBottom: 2,
+  input: {
+    height: 44,
+    borderColor: Theme.colors.border,
+    borderWidth: 1,
+    borderRadius: Theme.borderRadius.sm,
+    paddingHorizontal: Theme.spacing.sm,
+    marginBottom: Theme.spacing.sm,
+    backgroundColor: '#f8fafc',
+    fontSize: Theme.typography.sm,
   },
-  smallButton: {
-    paddingVertical: 4,
-    paddingHorizontal: 8,
-    backgroundColor: '#ff0000',
-    borderRadius: 4,
+  required: {
+    borderColor: Theme.colors.danger,
   },
-  smallButtonText: {
-    fontSize: 12,
+  checkboxContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: Theme.spacing.sm,
+  },
+  checkbox: {
+    marginRight: Theme.spacing.xs,
+  },
+  checkboxLabel: {
+    fontSize: Theme.typography.sm,
+    color: Theme.colors.text,
+  },
+  picker: {
+    height: 48,
+    width: '100%',
+    backgroundColor: '#f8fafc',
+    borderRadius: Theme.borderRadius.sm,
+    marginBottom: Theme.spacing.sm,
+  },
+  formActionRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: Theme.spacing.sm,
+    marginTop: Theme.spacing.md,
+  },
+  formBtnCancel: {
+    flex: 1,
+    paddingVertical: 12,
+    borderRadius: Theme.borderRadius.md,
+    backgroundColor: '#f1f5f9',
+    alignItems: 'center',
+  },
+  formBtnCancelText: {
+    color: Theme.colors.textMuted,
+    fontWeight: 'bold',
+    fontSize: Theme.typography.sm,
+  },
+  formBtnSubmit: {
+    flex: 1,
+    paddingVertical: 12,
+    borderRadius: Theme.borderRadius.md,
+    backgroundColor: Theme.colors.primary,
+    alignItems: 'center',
+  },
+  formBtnSubmitDisabled: {
+    backgroundColor: Theme.colors.borderDark,
+  },
+  formBtnSubmitText: {
     color: '#ffffff',
-  },
-  roundedCorners: {
-    borderRadius: 4,
-  },
-  itemName: {
-    fontSize: 16,
     fontWeight: 'bold',
+    fontSize: Theme.typography.sm,
   },
-  addItemButtonText: {
-    color: '#ffffff',
-    marginLeft: 10,
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  addItemButton: {
+  photoPickerBtn: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#007bff', // Example color for enabled state
-    padding: 6,
-    borderRadius: 5,
-    marginBottom: 0,
+    backgroundColor: '#eff6ff',
+    paddingVertical: 10,
+    borderRadius: Theme.borderRadius.sm,
+    marginBottom: Theme.spacing.sm,
+    borderWidth: 1,
+    borderColor: Theme.colors.primaryLight,
   },
-  addItemButtonDisabled: {
-    backgroundColor: '#cccccc', // Example color for disabled state
+  photoPickerText: {
+    marginLeft: Theme.spacing.xs,
+    color: Theme.colors.primary,
+    fontWeight: '600',
+    fontSize: Theme.typography.xs,
   },
-  cameraButton: {
+  addItemFloatingBtn: {
+    position: 'absolute',
+    bottom: Theme.spacing.lg,
+    right: Theme.spacing.lg,
+    left: Theme.spacing.lg,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#007AFF',
-    padding: 10,
-    borderRadius: 5,
-    marginBottom: 20,
+    backgroundColor: Theme.colors.primary,
+    paddingVertical: 14,
+    borderRadius: Theme.borderRadius.full,
+    elevation: 4,
+    shadowColor: Theme.colors.primary,
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
   },
-  cameraButtonText: {
+  addItemFloatingBtnText: {
     color: '#ffffff',
-    marginLeft: 10,
+    marginLeft: Theme.spacing.sm,
+    fontSize: Theme.typography.md,
+    fontWeight: 'bold',
   },
-  cameraButtonDisabled: {
-    backgroundColor: '#cccccc',
+  emptyListText: {
+    textAlign: 'center',
+    color: Theme.colors.textMuted,
+    marginTop: Theme.spacing.xl,
+    fontSize: Theme.typography.sm,
   },
 });
 

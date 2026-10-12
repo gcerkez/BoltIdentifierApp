@@ -7,7 +7,11 @@
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "typecheck": "tsc --noEmit",
+    "container:build": "./scripts/container-build.sh",
+    "container:test": "./scripts/container-test.sh"
   },
   "dependencies": {
     "@bam.tech/react-native-image-resizer": "^3.0.10",
@@ -42,6 +46,7 @@
     "@react-native/eslint-config": "0.75.3",
     "@react-native/metro-config": "0.75.3",
     "@react-native/typescript-config": "0.75.3",
+    "@types/jest": "^30.0.0",
     "@types/react": "^18.2.6",
     "@types/react-test-renderer": "^18.0.0",
     "babel-jest": "^29.6.3",

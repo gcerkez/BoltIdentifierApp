@@ -1,99 +1,120 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Alert} from 'react-native';
-import {CustomItem} from '../utils/CommonHelper';
+import { Alert } from 'react-native';
+import { CustomItem } from '../types/BoltTypes';
+import { predefinedItems } from '../constants/PredefinedItems';
 
-// Load custom items from AsyncStorage
+const CUSTOM_ITEMS_STORAGE_KEY = 'customItems';
+
+/**
+ * Loads custom items from AsyncStorage.
+ */
 export const loadCustomItems = async (
   setCustomItems: (items: CustomItem[]) => void,
-) => {
-  const storedItems = await AsyncStorage.getItem('customItems');
-  if (storedItems) {
-    setCustomItems(JSON.parse(storedItems));
+): Promise<CustomItem[]> => {
+  try {
+    const storedItems = await AsyncStorage.getItem(CUSTOM_ITEMS_STORAGE_KEY);
+    if (storedItems) {
+      const parsed: CustomItem[] = JSON.parse(storedItems);
+      setCustomItems(parsed);
+      return parsed;
+    }
+    setCustomItems([]);
+    return [];
+  } catch (error) {
+    console.error('Failed to load custom reference items:', error);
+    setCustomItems([]);
+    return [];
   }
 };
 
-// Add or update a custom item
+/**
+ * Combines predefined items with custom user items.
+ */
+export const getAllReferenceItems = (customItems: CustomItem[]): CustomItem[] => {
+  return [...predefinedItems, ...customItems];
+};
+
+/**
+ * Adds or updates a custom reference item.
+ */
 export const addOrUpdateCustomItem = async (
   newItem: Partial<CustomItem>,
   customItems: CustomItem[],
   setCustomItems: (items: CustomItem[]) => void,
-  setNewItem: (item: Partial<CustomItem>) => void,
-  setEditingItemId: (id: string | null) => void,
-  setSize: (size: string) => void,
-  setIsRound: (isRound: boolean) => void,
-  setIsFormVisible: (isVisible: boolean) => void,
-  isRound: boolean,
-  size: string,
-  editingItemId: string | null,
-) => {
-  if (newItem.name && (isRound ? size : newItem.width && newItem.height)) {
-    let updatedItems;
-    const itemToSave = {
-      ...newItem,
-      width: isRound ? size : newItem.width,
-      height: isRound ? size : newItem.height,
-    } as CustomItem;
+  resetForm: () => void,
+  editingItemId: string | null = null,
+): Promise<boolean> => {
+  if (!newItem.name || !newItem.width) {
+    Alert.alert('Validation Error', 'Please provide a name and dimensions for the item.');
+    return false;
+  }
 
-    if (editingItemId) {
-      updatedItems = customItems.map(item =>
-        item.id === editingItemId ? {...item, ...itemToSave} : item,
-      );
-      setEditingItemId(null);
-    } else {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const {id, ...rest} = itemToSave;
-      const newItemWithId: CustomItem = {
-        id: Date.now().toString(),
-        ...rest,
-      };
-      updatedItems = [...customItems, newItemWithId];
-    }
+  const widthVal = newItem.width.trim();
+  const heightVal = newItem.isRound ? widthVal : (newItem.height ? newItem.height.trim() : widthVal);
+
+  const itemToSave: CustomItem = {
+    id: editingItemId || Date.now().toString(),
+    name: newItem.name.trim(),
+    width: widthVal,
+    height: heightVal,
+    unit: newItem.unit || 'mm',
+    isRound: newItem.isRound ?? (widthVal === heightVal),
+    category: 'custom',
+    photoUris: newItem.photoUris || [],
+  };
+
+  let updatedItems: CustomItem[];
+  if (editingItemId) {
+    updatedItems = customItems.map(item =>
+      item.id === editingItemId ? itemToSave : item,
+    );
+  } else {
+    updatedItems = [...customItems, itemToSave];
+  }
+
+  try {
     setCustomItems(updatedItems);
-    await AsyncStorage.setItem('customItems', JSON.stringify(updatedItems));
-    setNewItem({
-      name: '',
-      width: '',
-      height: '',
-      unit: 'mm',
-      photoUris: [],
-    });
-    setSize('');
-    setIsRound(false);
-    setIsFormVisible(false);
+    await AsyncStorage.setItem(CUSTOM_ITEMS_STORAGE_KEY, JSON.stringify(updatedItems));
+    resetForm();
+    return true;
+  } catch (error) {
+    console.error('Failed to save custom item:', error);
+    Alert.alert('Error', 'Failed to save reference item.');
+    return false;
   }
 };
 
-// Delete a custom item
+/**
+ * Deletes a custom reference item.
+ */
 export const deleteCustomItem = async (
   id: string,
   customItems: CustomItem[],
   setCustomItems: (items: CustomItem[]) => void,
-) => {
+): Promise<void> => {
   const updatedItems = customItems.filter(item => item.id !== id);
   setCustomItems(updatedItems);
-  await AsyncStorage.setItem('customItems', JSON.stringify(updatedItems));
+  await AsyncStorage.setItem(CUSTOM_ITEMS_STORAGE_KEY, JSON.stringify(updatedItems));
 };
 
-// Confirm deletion of a custom item
-// eslint-disable-next-line @typescript-eslint/no-shadow
+/**
+ * Confirms deletion of a custom item with an alert dialog.
+ */
 export const confirmDeleteCustomItem = (
   id: string,
-  deleteCustomItem: (id: string) => void,
+  onDelete: (id: string) => void,
 ) => {
   Alert.alert(
-    'Delete Item',
-    'Are you sure you want to delete this item?',
+    'Delete Reference Item',
+    'Are you sure you want to delete this custom reference item?',
     [
-      {
-        text: 'Cancel',
-        style: 'cancel',
-      },
+      { text: 'Cancel', style: 'cancel' },
       {
         text: 'Delete',
-        onPress: () => deleteCustomItem(id),
+        onPress: () => onDelete(id),
         style: 'destructive',
       },
     ],
-    {cancelable: true},
+    { cancelable: true },
   );
 };

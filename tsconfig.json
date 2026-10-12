@@ -1,6 +1,10 @@
 {
   "extends": "@react-native/typescript-config/tsconfig.json",
   "compilerOptions": {
+    "types": [
+      "jest",
+      "react-native"
+    ],
     "typeRoots": [
       "./node_modules/@types",
       "./src/types"
@@ -11,7 +15,7 @@
       "dom",
       "esnext"
     ],
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "noEmit": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
