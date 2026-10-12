@@ -69,4 +69,6 @@ export interface CaliperRegion {
   referenceRadius: number; // Radius of reference item (if round)
   referenceWidth: number; // Width of reference item (if rect)
   referenceHeight: number; // Height of reference item (if rect)
+  selectedTemplate?: HeadType; // Selected fastener shape/head style template
+  gaugePitch?: number; // Pitch in mm set via thread gauge comb
 }

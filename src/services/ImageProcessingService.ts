@@ -174,9 +174,11 @@ export const measureFromCaliperRegion = (
   }
 
   const detectedPitchPx = detectPitchFromSignal(syntheticSignal);
-  const threadSpacing = detectedPitchPx / pixelsPerMm;
+  const threadSpacing = caliper.gaugePitch ? caliper.gaugePitch : (detectedPitchPx / pixelsPerMm);
 
-  const headType = classifyHeadType(socketSizePx, headLengthPx, shankDiameterPx);
+  const headType = caliper.selectedTemplate && caliper.selectedTemplate !== 'Unknown'
+    ? caliper.selectedTemplate
+    : classifyHeadType(socketSizePx, headLengthPx, shankDiameterPx);
 
   return {
     threadSpacing: Number(threadSpacing.toFixed(2)),
