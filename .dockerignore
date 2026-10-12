@@ -1,0 +1,11 @@
+node_modules
+android/app/build
+android/build
+android/.gradle
+ios/build
+ios/Pods
+.git
+.github
+coverage
+*.log
+.DS_Store

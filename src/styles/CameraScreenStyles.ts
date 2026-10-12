@@ -1,110 +1,200 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
+import { Theme } from '../constants/Theme';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
-    backgroundColor: 'lightblue', // Added background color for visibility
+    backgroundColor: Theme.colors.background,
+  },
+  scrollContent: {
+    padding: Theme.spacing.lg,
+    paddingBottom: Theme.spacing.xxl,
+  },
+  headerCard: {
+    backgroundColor: Theme.colors.card,
+    borderRadius: Theme.borderRadius.md,
+    padding: Theme.spacing.md,
+    borderWidth: 1,
+    borderColor: Theme.colors.border,
+    marginBottom: Theme.spacing.md,
   },
   pickerContainer: {
-    marginBottom: 20,
+    marginBottom: Theme.spacing.sm,
   },
   pickerLabel: {
-    fontSize: 16,
-    marginBottom: 8,
+    fontSize: Theme.typography.sm,
+    fontWeight: '700',
+    color: Theme.colors.secondary,
+    marginBottom: Theme.spacing.xs,
   },
   required: {
-    color: 'red',
-    fontSize: 16,
+    color: Theme.colors.danger,
+    fontSize: Theme.typography.sm,
   },
   picker: {
-    height: 50,
+    height: 52,
     width: '100%',
-    borderWidth: 1,
-    borderColor: 'black',
-    backgroundColor: '#ffffff',
-    borderRadius: 5,
-    elevation: 2, // Add elevation for Android
-    shadowColor: '#000', // Add shadow for iOS
-    shadowOffset: {width: 0, height: 1},
-    shadowOpacity: 0.2,
-    shadowRadius: 1,
+    backgroundColor: '#f8fafc',
+    borderRadius: Theme.borderRadius.sm,
+  },
+  referenceDetailChip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: Theme.colors.activePill,
+    paddingHorizontal: Theme.spacing.sm,
+    paddingVertical: 6,
+    borderRadius: Theme.borderRadius.sm,
+    marginTop: Theme.spacing.xs,
+  },
+  referenceDetailText: {
+    fontSize: Theme.typography.xs,
+    color: Theme.colors.primary,
+    fontWeight: '600',
   },
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 20,
+    gap: Theme.spacing.sm,
+    marginBottom: Theme.spacing.md,
   },
   cameraButton: {
-    flex: 0.48, // Half width with some space between
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#007AFF',
-    padding: 10,
-    borderRadius: 5,
+    backgroundColor: Theme.colors.primary,
+    paddingVertical: 14,
+    borderRadius: Theme.borderRadius.md,
+    elevation: 2,
+    shadowColor: Theme.colors.primary,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3,
   },
   cameraButtonDisabled: {
-    backgroundColor: '#cccccc', // Disabled state color
+    backgroundColor: Theme.colors.borderDark,
+    elevation: 0,
+    shadowOpacity: 0,
   },
   cameraButtonText: {
     color: '#ffffff',
-    marginLeft: 10,
+    marginLeft: Theme.spacing.sm,
+    fontWeight: 'bold',
+    fontSize: Theme.typography.md,
   },
   resetButton: {
-    flex: 0.48, // Half width with some space between
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 5,
-    backgroundColor: '#007bff', // Example color for enabled state
-    padding: 10,
+    backgroundColor: '#64748b',
+    paddingVertical: 14,
+    paddingHorizontal: Theme.spacing.lg,
+    borderRadius: Theme.borderRadius.md,
   },
   resetButtonText: {
     color: '#ffffff',
-    marginLeft: 10,
-    fontSize: 16,
+    marginLeft: Theme.spacing.xs,
+    fontSize: Theme.typography.sm,
     fontWeight: 'bold',
   },
-  image: {
-    width: 200,
-    height: 200,
-    alignSelf: 'center',
-    marginBottom: 20,
-  },
-  metadataContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 20,
-    backgroundColor: '#ffffff', // White background for the table
+  imageCard: {
+    backgroundColor: Theme.colors.card,
+    borderRadius: Theme.borderRadius.md,
+    padding: Theme.spacing.sm,
     borderWidth: 1,
-    borderColor: '#000000', // Black border for the table
-    padding: 10,
-    maxHeight: 200, // Set static height to a little less than half the view space
+    borderColor: Theme.colors.border,
+    alignItems: 'center',
+    marginBottom: Theme.spacing.md,
   },
-  metadataRow: {
+  image: {
+    width: '100%',
+    height: 220,
+    borderRadius: Theme.borderRadius.sm,
+    resizeMode: 'contain',
+    backgroundColor: '#0f172a',
+  },
+  toggleCaliperBtn: {
+    marginTop: Theme.spacing.sm,
+    paddingVertical: 6,
+    paddingHorizontal: Theme.spacing.md,
+    backgroundColor: '#e2e8f0',
+    borderRadius: Theme.borderRadius.full,
+  },
+  toggleCaliperText: {
+    fontSize: Theme.typography.xs,
+    color: Theme.colors.secondary,
+    fontWeight: '700',
+  },
+  unitSelectorRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    width: '100%',
-    borderBottomWidth: 1,
-    borderBottomColor: '#000000', // Black border for rows
-    paddingVertical: 5,
+    backgroundColor: Theme.colors.card,
+    borderRadius: Theme.borderRadius.md,
+    padding: Theme.spacing.sm,
+    borderWidth: 1,
+    borderColor: Theme.colors.border,
+    marginBottom: Theme.spacing.md,
   },
-  metadataColumn: {
-    flex: 2,
-    alignItems: 'center',
+  unitSelectorLabel: {
+    fontSize: Theme.typography.sm,
+    fontWeight: '700',
+    color: Theme.colors.secondary,
   },
-  metadataText: {
-    width: 200,
-    fontSize: 18,
-    flex: 2, // Increase flex to allocate more space for the text
-    textAlign: 'center',
+  unitPills: {
+    flexDirection: 'row',
+    gap: 4,
+  },
+  unitPill: {
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: Theme.borderRadius.full,
+    backgroundColor: '#f1f5f9',
+  },
+  unitPillActive: {
+    backgroundColor: Theme.colors.primary,
+  },
+  unitPillText: {
+    fontSize: Theme.typography.xs,
+    fontWeight: '700',
+    color: Theme.colors.textMuted,
+  },
+  unitPillTextActive: {
+    color: '#ffffff',
   },
   inlinePicker: {
-    height: 30,
-    width: 100,
+    height: 36,
+    width: 90,
+  },
+  emptyStateCard: {
+    backgroundColor: Theme.colors.card,
+    borderRadius: Theme.borderRadius.md,
+    padding: Theme.spacing.xl,
+    borderWidth: 1,
+    borderColor: Theme.colors.border,
+    alignItems: 'center',
+    marginTop: Theme.spacing.sm,
+  },
+  emptyStateIconCircle: {
+    width: 64,
+    height: 64,
+    borderRadius: 32,
+    backgroundColor: Theme.colors.activePill,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: Theme.spacing.md,
+  },
+  emptyStateTitle: {
+    fontSize: Theme.typography.lg,
+    fontWeight: 'bold',
+    color: Theme.colors.secondary,
+    marginBottom: Theme.spacing.xs,
+  },
+  emptyStateText: {
+    fontSize: Theme.typography.sm,
+    color: Theme.colors.textMuted,
+    textAlign: 'center',
+    lineHeight: 20,
   },
 });
 
